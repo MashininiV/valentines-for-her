@@ -129,20 +129,28 @@
   <div class="hearts" id="hearts"></div>
 
   <script>
-    const noBtn = document.getElementById("no");
-    const yesBtn = document.getElementById("yes");
-    const card = document.getElementById("card");
-    const heartsContainer = document.getElementById("hearts");
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const card = document.getElementById("card");
+const heartsContainer = document.getElementById("hearts");
 
-    noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * 200 - 100;
-      const y = Math.random() * 200 - 100;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    });
+function moveNoButton() {
+  const x = Math.random() * 200 - 100;
+  const y = Math.random() * 200 - 100;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
 
-    yesBtn.addEventListener("click", () => {
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("touchstart", moveNoButton);
+noBtn.addEventListener("touchmove", moveNoButton);
+
+noBtn.addEventListener("click", () => {
+  noBtn.innerText = "Nice try 😏";
+});
+
+yesBtn.addEventListener("click", () => {
   const music = document.getElementById("bgMusic");
-  music.play();
+  if (music) music.play();
 
   card.innerHTML = `
     <h1>Yayyy!! 💕🎉</h1>
@@ -151,27 +159,28 @@
       Thank you for making me the happiest Valentine ever.
     </p>
     <p>
-      With love,<br><strong>Likamva lakho'Muzi' 💖</strong>
+      With love,<br><strong>Likamva'Muzi' 💖</strong>
     </p>
   `;
+
   startHearts();
 });
 
+function startHearts() {
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerText = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+    heartsContainer.appendChild(heart);
 
-    function startHearts() {
-      setInterval(() => {
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerText = "💖";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = Math.random() * 20 + 15 + "px";
-        heartsContainer.appendChild(heart);
-
-        setTimeout(() => heart.remove(), 6000);
-      }, 300);
-    }
-  </script>
+    setTimeout(() => heart.remove(), 6000);
+  }, 300);
+}
+</script>
 <audio id="bgMusic" src="Luther.m4a.mp4" loop></audio>
 
 </body>
 </html>
+
